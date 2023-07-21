@@ -59,7 +59,7 @@ const App = () => {
    };
 
    return (
-      <div className="bg-[url(./assets/images/bg-mobile-light.jpg)] bg-no-repeat bg-contain bg-gray-200 min-h-screen">
+      <div className="bg-[url(./assets/images/bg-mobile-light.jpg)] bg-no-repeat bg-contain bg-gray-200 min-h-screen dark:bg-[url(./assets/images/bg-mobile-dark.jpg)] dark:bg-slate-700">
          <Header />
 
          <main className="container mx-auto px-4">
@@ -80,7 +80,7 @@ const App = () => {
             <TaskFilter setFilter={setFilter} filter={filter} />
          </main>
 
-         <footer className="container mx-auto px-4 mt-8 text-center">
+         <footer className="container mx-auto p-4 mt-8 text-center dark:text-slate-300">
             Drag & Drop pendiente para ordenar tareas
          </footer>
       </div>
