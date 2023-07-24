@@ -20,7 +20,7 @@ const Header = () => {
    return (
       <header
          className="container mx-auto px-4 transition-all
-         duration-700"
+         duration-700 md:max-w-xl"
       >
          <div className="flex justify-between pt-8">
             <h1 className="uppercase text-white text-2xl font-semibold tracking-[0.3em]">

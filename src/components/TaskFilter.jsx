@@ -6,7 +6,7 @@ const TaskFilter = ({ setFilter, filter }) => {
       >
          <div
             className="flex justify-center rounded-md bg-white py-4 gap-4 dark:bg-slate-800 transition-all
-         duration-700"
+            duration-700"
          >
             <button
                className={`${

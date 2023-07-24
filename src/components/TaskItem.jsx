@@ -5,7 +5,7 @@ const TaskItem = ({ obj, changeComplete, removeTask }) => {
    return (
       <article
          className="flex gap-4 border-b border-b-gray-300 dark:bg-slate-800 dark:border-b-slate-600 transition-all
-      duration-700 ease-in-out"
+      duration-700"
       >
          <button
             onClick={() => changeComplete(obj.id)}

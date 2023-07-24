@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import TaskComputed from "./components/TaskComputed";
@@ -6,15 +6,14 @@ import TaskCreate from "./components/TaskCreate";
 import TaskFilter from "./components/TaskFilter";
 import TaskList from "./components/TaskList";
 
-const initialStateTasks = [
-   { id: 1, title: "Terminar el curso de ReacJS-2023", completed: false },
-   { id: 2, title: "Ir al Gimnacio", completed: true },
-   { id: 3, title: "Terminar el programa de Becas", completed: false },
-   { id: 4, title: "Ir al Gimnacio otra vez", completed: false },
-];
+const initialStateTasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
 const App = () => {
    const [tasks, setTasks] = useState(initialStateTasks);
+
+   useEffect(() => {
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+   }, [tasks]);
 
    const createTask = (title) => {
       const newTask = {
@@ -59,10 +58,10 @@ const App = () => {
    };
 
    return (
-      <div className="bg-[url(./assets/images/bg-mobile-light.jpg)] bg-no-repeat bg-contain bg-gray-200 min-h-screen dark:bg-[url(./assets/images/bg-mobile-dark.jpg)] dark:bg-slate-700">
+      <div className="bg-[url(./assets/images/bg-mobile-light.jpg)] bg-no-repeat bg-contain bg-gray-200 min-h-screen dark:bg-[url(./assets/images/bg-mobile-dark.jpg)] dark:bg-slate-700 md:bg-[url('./assets/images/bg-desktop-light.jpg')] md:dark:bg-[url('./assets/images/bg-desktop-dark.jpg')] transition-all duration-700">
          <Header />
 
-         <main className="container mx-auto px-4">
+         <main className="container mx-auto px-4 md:max-w-xl">
             <TaskCreate createTask={createTask} />
 
             {/* TaskList {Task} TaskUpdate & TaskDelete */}
