@@ -15,6 +15,7 @@ const App = () => {
       localStorage.setItem("tasks", JSON.stringify(tasks));
    }, [tasks]);
 
+
    const createTask = (title) => {
       const newTask = {
          id: tasks.length + 1,
@@ -38,9 +39,13 @@ const App = () => {
       setTasks(tasks.filter((task) => !task.completed));
    };
 
-   const pendingTasks = tasks.filter((task) => !task.completed).length;
+   let pendingTasks = tasks.filter((task) => !task.completed).length;
 
    const [filter, setFilter] = useState("all");
+   useEffect(() => {
+      pendingTasks = tasks.filter((task) => !task.completed).length;
+      
+   }, [filter]);
    const filteredTask = () => {
       switch (filter) {
          case "all":
