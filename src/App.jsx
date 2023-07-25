@@ -1,3 +1,5 @@
+import { DragDropContext } from "@hello-pangea/dnd";
+
 import { useEffect, useState } from "react";
 import "./App.css";
 import Header from "./components/Header";
@@ -8,13 +10,19 @@ import TaskList from "./components/TaskList";
 
 const initialStateTasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
+const reorder = (list, startIndex, endIndex) => {
+   const listTemp = [...list]; //hacemos una copia temporal del arrray
+   const [removeItemTemp] = listTemp.splice(startIndex, 1); // sacamos el item tomado del array temporal, porque el splice muta el array
+   listTemp.splice(endIndex, 0, removeItemTemp); // regresamos el item al array ya en su nueva posicion
+   return listTemp; //retornamos la lista reordenada
+};
+
 const App = () => {
    const [tasks, setTasks] = useState(initialStateTasks);
 
    useEffect(() => {
       localStorage.setItem("tasks", JSON.stringify(tasks));
    }, [tasks]);
-
 
    const createTask = (title) => {
       const newTask = {
@@ -44,7 +52,6 @@ const App = () => {
    const [filter, setFilter] = useState("all");
    useEffect(() => {
       pendingTasks = tasks.filter((task) => !task.completed).length;
-      
    }, [filter]);
    const filteredTask = () => {
       switch (filter) {
@@ -62,6 +69,19 @@ const App = () => {
       }
    };
 
+   const handleDragEnd = (result) => {
+      const { destination, source } = result;
+      if (!destination) return;
+      if (
+         source.index === destination.index &&
+         source.droppableId === destination.droppableId
+      )
+         return;
+      setTasks((prevTasks) =>
+         reorder(prevTasks, source.index, destination.index)
+      );
+   };
+
    return (
       <div className="bg-[url(./assets/images/bg-mobile-light.jpg)] bg-no-repeat bg-contain bg-gray-200 min-h-screen dark:bg-[url(./assets/images/bg-mobile-dark.jpg)] dark:bg-slate-700 md:bg-[url('./assets/images/bg-desktop-light.jpg')] md:dark:bg-[url('./assets/images/bg-desktop-dark.jpg')] transition-all duration-700">
          <Header />
@@ -70,11 +90,13 @@ const App = () => {
             <TaskCreate createTask={createTask} />
 
             {/* TaskList {Task} TaskUpdate & TaskDelete */}
-            <TaskList
-               list={filteredTask()}
-               changeComplete={changeComplete}
-               removeTask={removeTask}
-            />
+            <DragDropContext onDragEnd={handleDragEnd}>
+               <TaskList
+                  list={filteredTask()}
+                  changeComplete={changeComplete}
+                  removeTask={removeTask}
+               />
+            </DragDropContext>
 
             <TaskComputed
                pendingTasks={pendingTasks}
