@@ -107,7 +107,7 @@ const App = () => {
          </main>
 
          <footer className="container mx-auto p-4 mt-8 text-center dark:text-slate-300">
-            Drag & Drop pendiente para ordenar tareas
+            La lista tiene Drag & Drop 👍😉
          </footer>
       </div>
    );
