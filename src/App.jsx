@@ -7,6 +7,8 @@ import TaskComputed from "./components/TaskComputed";
 import TaskCreate from "./components/TaskCreate";
 import TaskFilter from "./components/TaskFilter";
 import TaskList from "./components/TaskList";
+import { useUserContext } from "./contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const initialStateTasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
@@ -82,8 +84,22 @@ const App = () => {
       );
    };
 
+   const { user, setUser } = useUserContext();
+   const navigate = useNavigate();
+   const handleLogin = () => {
+      setUser(true);
+      navigate("/blog ");
+   };
+
    return (
       <div className="bg-[url(./assets/images/bg-mobile-light.jpg)] bg-no-repeat bg-contain bg-gray-200 min-h-screen dark:bg-[url(./assets/images/bg-mobile-dark.jpg)] dark:bg-slate-700 md:bg-[url('./assets/images/bg-desktop-light.jpg')] md:dark:bg-[url('./assets/images/bg-desktop-dark.jpg')] transition-all duration-700">
+         <button
+            className="bg-slate-100 text-slate-700 font-bold p-2 rounded"
+            onClick={() => handleLogin()}
+         >
+            Iniciar Sesion
+         </button>
+
          <Header />
 
          <main className="container mx-auto px-4 md:max-w-xl">
